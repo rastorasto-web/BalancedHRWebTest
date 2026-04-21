@@ -1089,7 +1089,9 @@
         }
 
         // --- Logika pre EmailJS (Odosielanie formulára) ---
-        emailjs.init("04e9O4Qvgl2pnKmQ3");
+        emailjs.init(({
+  publicKey: "04e9O4Qvgl2pnKmQ3",
+}));
 
         const orderForm = document.getElementById('orderForm');
         if (orderForm) {
