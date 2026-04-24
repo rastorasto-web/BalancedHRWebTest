@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
+    <!-- Potlačenie generickej chyby "Script error.", ktorá vzniká v náhľadoch kvôli externým skriptom (CORS) -->
+    <script>
+        window.addEventListener('error', function(e) {
+            if (e.message === 'Script error.' || (e.error && e.error.message === 'Script error.')) {
+                e.preventDefault(); // Zastaví propagáciu chyby do UI náhľadu
+            }
+        });
+    </script>
+
     <!-- Start cookieyes banner --> <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/f620520852a83fe857738cefb98c2b8c/script.js"></script> <!-- End cookieyes banner -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -932,7 +941,7 @@
                     { time: '13:00 - 14:00', label: 'Live testovanie a Q&A' }
                 ],
                 for: 'Celý tím, od administratívy po top management.',
-                dates: ['14. máj 2026 (štvrtok), Trenčín (8:30 – 13:30)', '2. jún 2026 (utorokok), Bratislava (8:30 – 13:30)']
+                dates: ['14. máj 2026 (štvrtok), Trenčín (8:30 – 13:30)', '2. jún 2026 (utorok), Bratislava (8:30 – 13:30)']
             },
             biznis: {
                 title: 'AI pre biznis',
@@ -995,7 +1004,7 @@
                     { time: '5 hodín', label: 'Deep-dive do aplikácií MS 365 s Copilotom' }
                 ],
                 for: 'Používatelia balíka Microsoft 365.',
-                dates: ['9. jún 2026 (utorok), Trenčín (8:30 – 13:30)', '11. jún 2026 (štvrtokk), Bratislava (9:00 – 14:00)']
+                dates: ['9. jún 2026 (utorok), Trenčín (8:30 – 13:30)', '11. jún 2026 (štvrtok), Bratislava (9:00 – 14:00)']
             },
             admin: {
                 title: 'AI kurz na mieru',
@@ -1019,18 +1028,25 @@
 
         const openCourses = [
             {
-                day: "21",
-                month: "Apr",
-                title: "AI pre biznis",
-                description: "Strategický workshop pre vedenie",
-                modalId: "biznis"
-            },
-            {
                 day: "05",
                 month: "Máj",
                 title: "AI pre efektívny Sales",
                 description: "Akcelerácia predaja a prospecting",
                 modalId: "sales"
+            },
+            {
+                day: "12",
+                month: "Máj",
+                title: "AI pre biznis",
+                description: "Strategický workshop pre vedenie",
+                modalId: "biznis"
+            },
+            {
+                day: "14",
+                month: "Máj",
+                title: "Krok do sveta AI",
+                description: "Univerzálny štart pre celú firmu",
+                modalId: "krok"
             },
             {
                 day: "19",
@@ -1040,18 +1056,11 @@
                 modalId: "hr"
             },
             {
-                day: "02",
+                day: "09",
                 month: "Jún",
                 title: "Microsoft Copilot (MS 365)",
                 description: "Inteligentný asistent pre balík Office",
                 modalId: "copilot"
-            },
-            {
-                day: "04",
-                month: "Jún",
-                title: "Krok do sveta AI",
-                description: "Univerzálny štart pre celú firmu",
-                modalId: "krok"
             }
         ];
 
