@@ -2,7 +2,7 @@
 <html lang="sk">
 <head>
     <!-- Potlačenie generickej chyby "Script error.", ktorá vzniká v náhľadoch kvôli externým skriptom (CORS) -->
-    <script>
+    <script data-cookieyes="ignore">
         window.addEventListener('error', function(e) {
             if (e.message === 'Script error.' || (e.error && e.error.message === 'Script error.')) {
                 e.preventDefault(); // Zastaví propagáciu chyby do UI náhľadu
@@ -16,7 +16,7 @@
     <title>AI Workshopy | Balanced HR - Praktické vzdelávanie</title>
     
     <!-- Prevencia prebliknutia pre Dark Mode -->
-    <script>
+    <script data-cookieyes="ignore">
         try {
             if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                 document.documentElement.classList.add('dark');
@@ -31,9 +31,9 @@
         }
     </script>
 
-    <!-- OPRAVENÉ: Odstránený crossorigin atribút, aby Tailwind načítal štýly -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
+    <!-- Tailwind CSS načítanie (Ignorované cookie lištou pre istotu) -->
+    <script src="https://cdn.tailwindcss.com" data-cookieyes="ignore"></script>
+    <script data-cookieyes="ignore">
         tailwind.config = {
             darkMode: 'class',
             theme: {
@@ -126,8 +126,8 @@
         }
     </style>
     
-    <!-- EmailJS knižnica - tiež opravené pre istotu -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- EmailJS knižnica -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" data-cookieyes="ignore"></script>
 </head>
 <body class="text-[#333333] dark:text-gray-200 bg-white dark:bg-bhr-dark transition-colors duration-300 overflow-x-hidden">
 
@@ -231,7 +231,7 @@
                             </div>
                             <div>
                                 <h4 class="text-xl md:text-2xl font-bold mb-2">Rozhoduje vždy človek</h4>
-                                <p class="text-gray-400 text-base md:text-lg leading-relaxed">AI nikdy nerozhoduje samostatne. Každý proces nastavujeme s jasnou hranicou ľudskej zodpovednosti.</p>
+                                <p class="text-gray-400 text-base md:text-lg leading-relaxed">AI u nás nikdy nerozhoduje samostatne. Každý proces nastavujeme s jasnou hranicou ľudskej zodpovednosti.</p>
                             </div>
                         </div>
 
@@ -798,9 +798,8 @@
         </div>
     </footer>
 
-    <script>
-        // --- Intersect Observer pre Apple-like Scroll Animácie ---
-        document.addEventListener('DOMContentLoaded', () => {
+    <script data-cookieyes="ignore">
+        function initAnimations() {
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
@@ -833,20 +832,28 @@
             setupStagger('.stagger-grid-open', '.reveal-item', 150);
             setupStagger('.stagger-grid-logos', '.reveal-item', 50);
             setupStagger('.stagger-grid-quotes', '.reveal-item', 150);
-        });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initAnimations);
+        } else {
+            initAnimations();
+        }
 
         // --- Mobilné menu a Dark Mode ---
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
 
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
 
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+                if(mobileMenu) mobileMenu.classList.add('hidden');
             });
         });
 
@@ -859,15 +866,15 @@
 
         function setIconsBasedOnTheme() {
             if (document.documentElement.classList.contains('dark')) {
-                themeToggleLightIcon.classList.remove('hidden');
-                themeToggleDarkIcon.classList.add('hidden');
-                themeToggleLightIconMobile.classList.remove('hidden');
-                themeToggleDarkIconMobile.classList.add('hidden');
+                if(themeToggleLightIcon) themeToggleLightIcon.classList.remove('hidden');
+                if(themeToggleDarkIcon) themeToggleDarkIcon.classList.add('hidden');
+                if(themeToggleLightIconMobile) themeToggleLightIconMobile.classList.remove('hidden');
+                if(themeToggleDarkIconMobile) themeToggleDarkIconMobile.classList.add('hidden');
             } else {
-                themeToggleDarkIcon.classList.remove('hidden');
-                themeToggleLightIcon.classList.add('hidden');
-                themeToggleDarkIconMobile.classList.remove('hidden');
-                themeToggleLightIconMobile.classList.add('hidden');
+                if(themeToggleDarkIcon) themeToggleDarkIcon.classList.remove('hidden');
+                if(themeToggleLightIcon) themeToggleLightIcon.classList.add('hidden');
+                if(themeToggleDarkIconMobile) themeToggleDarkIconMobile.classList.remove('hidden');
+                if(themeToggleLightIconMobile) themeToggleLightIconMobile.classList.add('hidden');
             }
         }
         setIconsBasedOnTheme();
@@ -902,8 +909,8 @@
             setIconsBasedOnTheme();
         }
 
-        themeToggleBtn.addEventListener('click', toggleTheme);
-        themeToggleBtnMobile.addEventListener('click', toggleTheme);
+        if(themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+        if(themeToggleBtnMobile) themeToggleBtnMobile.addEventListener('click', toggleTheme);
 
         // --- Dáta pre kurzy ---
         const workshopData = {
@@ -948,14 +955,14 @@
                 subtitle: 'Strategický workshop pre vedenie',
                 gains: [
                     'Identifikácia neefektívnych procesov na automatizáciu',
-                    'Návrh AI stratégie',
+                    'Návrh AI stratégie a meranie ROI',
                     'Získanie konkurenčnej výhody cez adaptáciu',
                     'Efektívne riadenie tímu s AI analytikou'
                 ],
                 structure: [
                     { time: '5 hodín', label: 'Audit procesov + Strategický framework + Implementačný plán' }
                 ],
-                for: 'Majitelia MSP, riaditelia a manažéri.',
+                for: 'Majitelia MSP, riaditelia a board členovia.',
                 dates: ['12. máj 2026 (utorok), Trenčín (8:30 – 13:30)', '4. jún 2026 (štvrtok), Bratislava (9:00 – 14:00)']
             },
             hr: {
@@ -980,14 +987,13 @@
                 title: 'AI pre efektívny Sales',
                 subtitle: 'Akcelerácia predaja a prospecting',
                 gains: [
-                    'AI transformácia tradičných sales úloh, získavanie leadov a vyjednávanie ',
-                    'Automatizácia zápisov a analýza hovorov
-                    'Automatizácia identifikácie klientov a podpora pri vyjednávaní,
+                    'Generovanie personalizovaných cold e-mailov',
+                    'Automatizácia zápisov v CRM a analýza hovorov',
                     'LinkedIn Prospecting na autopilota',
                     'Rýchla tvorba predajných argumentov'
                 ],
                 structure: [
-                    { time: '5 hodín', label: 'Lead gen moduly + Sales Copywriting' }
+                    { time: '5 hodín', label: 'Lead gen moduly + CRM automatizácia + Sales Copywriting' }
                 ],
                 for: 'Obchodní riaditelia a Sales tímy.',
                 dates: ['5. mája 2026 (utorok), Trenčín (8:30 – 13:30)', '28. mája 2026 (štvrtok), Bratislava (9:00 – 14:00)']
