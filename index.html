@@ -1,22 +1,13 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
-    <!-- Potlačenie generickej chyby "Script error.", ktorá vzniká v náhľadoch kvôli externým skriptom (CORS) -->
-    <script data-cookieyes="ignore">
-        window.addEventListener('error', function(e) {
-            if (e.message === 'Script error.' || (e.error && e.error.message === 'Script error.')) {
-                e.preventDefault(); // Zastaví propagáciu chyby do UI náhľadu
-            }
-        });
-    </script>
-
     <!-- Start cookieyes banner --> <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/f620520852a83fe857738cefb98c2b8c/script.js"></script> <!-- End cookieyes banner -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AI Workshopy | Balanced HR - Praktické vzdelávanie</title>
     
     <!-- Prevencia prebliknutia pre Dark Mode -->
-    <script data-cookieyes="ignore">
+    <script>
         try {
             if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                 document.documentElement.classList.add('dark');
@@ -31,9 +22,9 @@
         }
     </script>
 
-    <!-- Tailwind CSS načítanie (Ignorované cookie lištou pre istotu) -->
-    <script src="https://cdn.tailwindcss.com" data-cookieyes="ignore"></script>
-    <script data-cookieyes="ignore">
+    <!-- OPRAVENÉ: Odstránený crossorigin atribút, aby Tailwind načítal štýly -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
@@ -126,8 +117,8 @@
         }
     </style>
     
-    <!-- EmailJS knižnica -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" data-cookieyes="ignore"></script>
+    <!-- EmailJS knižnica - tiež opravené pre istotu -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body class="text-[#333333] dark:text-gray-200 bg-white dark:bg-bhr-dark transition-colors duration-300 overflow-x-hidden">
 
@@ -798,8 +789,9 @@
         </div>
     </footer>
 
-    <script data-cookieyes="ignore">
-        function initAnimations() {
+    <script>
+        // --- Intersect Observer pre Apple-like Scroll Animácie ---
+        document.addEventListener('DOMContentLoaded', () => {
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
@@ -832,28 +824,20 @@
             setupStagger('.stagger-grid-open', '.reveal-item', 150);
             setupStagger('.stagger-grid-logos', '.reveal-item', 50);
             setupStagger('.stagger-grid-quotes', '.reveal-item', 150);
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initAnimations);
-        } else {
-            initAnimations();
-        }
+        });
 
         // --- Mobilné menu a Dark Mode ---
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
 
-        if (mobileMenuBtn && mobileMenu) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
 
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
-                if(mobileMenu) mobileMenu.classList.add('hidden');
+                mobileMenu.classList.add('hidden');
             });
         });
 
@@ -866,15 +850,15 @@
 
         function setIconsBasedOnTheme() {
             if (document.documentElement.classList.contains('dark')) {
-                if(themeToggleLightIcon) themeToggleLightIcon.classList.remove('hidden');
-                if(themeToggleDarkIcon) themeToggleDarkIcon.classList.add('hidden');
-                if(themeToggleLightIconMobile) themeToggleLightIconMobile.classList.remove('hidden');
-                if(themeToggleDarkIconMobile) themeToggleDarkIconMobile.classList.add('hidden');
+                themeToggleLightIcon.classList.remove('hidden');
+                themeToggleDarkIcon.classList.add('hidden');
+                themeToggleLightIconMobile.classList.remove('hidden');
+                themeToggleDarkIconMobile.classList.add('hidden');
             } else {
-                if(themeToggleDarkIcon) themeToggleDarkIcon.classList.remove('hidden');
-                if(themeToggleLightIcon) themeToggleLightIcon.classList.add('hidden');
-                if(themeToggleDarkIconMobile) themeToggleDarkIconMobile.classList.remove('hidden');
-                if(themeToggleLightIconMobile) themeToggleLightIconMobile.classList.add('hidden');
+                themeToggleDarkIcon.classList.remove('hidden');
+                themeToggleLightIcon.classList.add('hidden');
+                themeToggleDarkIconMobile.classList.remove('hidden');
+                themeToggleLightIconMobile.classList.add('hidden');
             }
         }
         setIconsBasedOnTheme();
@@ -909,8 +893,8 @@
             setIconsBasedOnTheme();
         }
 
-        if(themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
-        if(themeToggleBtnMobile) themeToggleBtnMobile.addEventListener('click', toggleTheme);
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        themeToggleBtnMobile.addEventListener('click', toggleTheme);
 
         // --- Dáta pre kurzy ---
         const workshopData = {
@@ -962,7 +946,7 @@
                 structure: [
                     { time: '5 hodín', label: 'Audit procesov + Strategický framework + Implementačný plán' }
                 ],
-                for: 'Majitelia MSP, riaditelia a board členovia.',
+                for: 'Majitelia MSP, riaditelia a manažéri.',
                 dates: ['12. máj 2026 (utorok), Trenčín (8:30 – 13:30)', '4. jún 2026 (štvrtok), Bratislava (9:00 – 14:00)']
             },
             hr: {
@@ -980,20 +964,20 @@
                     { time: 'Blok 2', label: 'People management a interná komunikácia' },
                     { time: 'Blok 3', label: 'Praktický workshop s reálnymi HR dátami' }
                 ],
-                for: 'HR Manažéri, Recruitment špecialisti a HRD.',
+                for: 'HR Manažéri, Recruitment špecialisti.',
                 dates: ['19. mája 2026 (utorok), Bratislava (9:00 – 14:00)', '26. mája 2026 (utorok), Trenčín (8:30 – 13:30)']
             },
             sales: {
                 title: 'AI pre efektívny Sales',
                 subtitle: 'Akcelerácia predaja a prospecting',
                 gains: [
-                    'Generovanie personalizovaných cold e-mailov',
-                    'Automatizácia zápisov v CRM a analýza hovorov',
+                    'AI transformácia tradičných sales úloh',
+                    'Automatizácia zápisov a analýza hovorov',
                     'LinkedIn Prospecting na autopilota',
                     'Rýchla tvorba predajných argumentov'
                 ],
                 structure: [
-                    { time: '5 hodín', label: 'Lead gen moduly + CRM automatizácia + Sales Copywriting' }
+                    { time: '5 hodín', label: 'Lead gen moduly + Sales Copywriting' }
                 ],
                 for: 'Obchodní riaditelia a Sales tímy.',
                 dates: ['5. mája 2026 (utorok), Trenčín (8:30 – 13:30)', '28. mája 2026 (štvrtok), Bratislava (9:00 – 14:00)']
@@ -1033,43 +1017,73 @@
             }
         };
 
-        const openCourses = [
-            {
-                day: "05",
-                month: "Máj",
-                title: "AI pre efektívny Sales",
-                description: "Akcelerácia predaja a prospecting",
-                modalId: "sales"
-            },
-            {
-                day: "12",
-                month: "Máj",
-                title: "AI pre biznis",
-                description: "Strategický workshop pre vedenie",
-                modalId: "biznis"
-            },
-            {
-                day: "14",
-                month: "Máj",
-                title: "Krok do sveta AI",
-                description: "Univerzálny štart pre celú firmu",
-                modalId: "krok"
-            },
-            {
-                day: "19",
-                month: "Máj",
-                title: "AI pre efektívne HR",
-                description: "Optimalizácia náboru a onboardingu",
-                modalId: "hr"
-            },
-            {
-                day: "09",
-                month: "Jún",
-                title: "Microsoft Copilot (MS 365)",
-                description: "Inteligentný asistent pre balík Office",
-                modalId: "copilot"
-            }
+        // --- Automatické filtrovanie termínov podľa aktuálneho dátumu ---
+        const slovakMonthMap = {
+            'január': 0, 'januára': 0,
+            'február': 1, 'februára': 1,
+            'marec': 2, 'marca': 2,
+            'apríl': 3, 'apríla': 3,
+            'máj': 4, 'mája': 4,
+            'jún': 5, 'júna': 5,
+            'júl': 6, 'júla': 6,
+            'august': 7, 'augusta': 7,
+            'september': 8, 'septembra': 8,
+            'október': 9, 'októbra': 9,
+            'november': 10, 'novembra': 10,
+            'december': 11, 'decembra': 11
+        };
+        const slovakMonthDisplay = ['Január','Február','Marec','Apríl','Máj','Jún','Júl','August','September','Október','November','December'];
+
+        function parseSlovakDate(str) {
+            const m = str.match(/(\d{1,2})\.\s+(\S+)\s+(\d{4})/);
+            if (!m) return null;
+            const month = slovakMonthMap[m[2].toLowerCase()];
+            if (month === undefined) return null;
+            return new Date(parseInt(m[3], 10), month, parseInt(m[1], 10));
+        }
+
+        // Odstránenie uplynulých termínov z workshopData (ovplyvní aj rozbaľovaciu lištu v modále)
+        (function filterExpiredDates() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            Object.keys(workshopData).forEach(key => {
+                const ws = workshopData[key];
+                if (Array.isArray(ws.dates) && ws.dates.length > 0) {
+                    ws.dates = ws.dates.filter(d => {
+                        const parsed = parseSlovakDate(d);
+                        return !parsed || parsed >= today;
+                    });
+                }
+            });
+        })();
+
+        // Metadáta pre hlavný pohľad (popisky) – dátum a mesiac sa doplnia automaticky
+        const openCourseMeta = [
+            { modalId: "biznis",  description: "Strategický workshop pre vedenie" },
+            { modalId: "sales",   description: "Akcelerácia predaja a prospecting" },
+            { modalId: "hr",      description: "Optimalizácia náboru a onboardingu" },
+            { modalId: "copilot", description: "Inteligentný asistent pre balík Office" },
+            { modalId: "krok",    description: "Univerzálny štart pre celú firmu" }
         ];
+
+        // Dynamické vytvorenie openCourses: pre každý kurz vyberie najbližší nadchádzajúci termín
+        const openCourses = openCourseMeta.map(meta => {
+            const ws = workshopData[meta.modalId];
+            if (!ws || !Array.isArray(ws.dates) || ws.dates.length === 0) return null;
+            const parsed = ws.dates
+                .map(d => ({ str: d, date: parseSlovakDate(d) }))
+                .filter(x => x.date)
+                .sort((a, b) => a.date - b.date);
+            if (parsed.length === 0) return null;
+            const first = parsed[0].date;
+            return {
+                day: String(first.getDate()).padStart(2, '0'),
+                month: slovakMonthDisplay[first.getMonth()],
+                title: ws.title,
+                description: meta.description,
+                modalId: meta.modalId
+            };
+        }).filter(c => c !== null);
 
         function renderCourses() {
             const container = document.getElementById('courses-container');
